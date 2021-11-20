@@ -7,8 +7,17 @@ from pathlib import Path
 from hoverable import HoverBehavior
 from kivy.uix.image import Image
 from kivy.uix.behaviors import  ButtonBehavior
+from sentiment import sentiment_analysis
 
 Builder.load_file('design.kv')
+
+class FirstScreen(Screen):
+    def get_started(self):
+        self.manager.current="first_screen"
+    
+    def getting_started(self):
+        self.manager.transition.direction='left'
+        self.manager.current="login_screen"
 
 class LoginScreen(Screen):
     def sign_up(self):
@@ -18,11 +27,15 @@ class LoginScreen(Screen):
         with open("users.json") as file:
             users=json.load(file)
         if uname in users and users[uname]['password']==pword:
+            self.manager.transition.direction='left'
             self.manager.current='login_screen_success'
         else:
             self.ids.login_wrong.text="Wrong username or password"
 
 class SignUpScreen(Screen):
+    def back_to_login(self):
+        self.manager.transition.direction='right'
+        self.manager.current="login_screen"
     def add_user(self, uname, pwd):
         with open("users.json") as file:
             users=json.load(file)
@@ -36,7 +49,7 @@ class SignUpScreen(Screen):
 
 class SignUpScreenSuccess(Screen):
     def go_to_login(self):
-        self.manager.transition.direction='right'
+        self.manager.transition.direction='left'
         self.manager.current="login_screen"
 
 class LoginScreenSuccess(Screen):
@@ -44,8 +57,10 @@ class LoginScreenSuccess(Screen):
         self.manager.transition.direction="right"
         self.manager.current="login_screen"
 
-    def get_quote(self, feel):
+    def get_quote(self, text):
+        feel = sentiment_analysis(text)
         feel=feel.lower()
+        
         available_feelings =glob.glob("quotes/*txt")
 
         available_feelings=[Path(filename).stem for filename in available_feelings]

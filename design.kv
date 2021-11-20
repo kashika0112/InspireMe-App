@@ -1,64 +1,165 @@
+<FirstScreen>:
+    orientation: 'vertical'
+    BoxLayout:
+        canvas.before:
+            Color: 
+                rgba: [1, 1, 1, 1]
+            Rectangle:
+                pos: self.pos
+                size: self.size
+            Color: 
+                rgba: rgba('#e67e22')
+            Triangle:
+                points: [0, self.size[1], self.size[0], self.size[1],0, self.size[1]-(0.4*self.size[1])]
+            Color: 
+                rgba: rgba('#59abe3')
+            Triangle:
+                points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1]-(0.4*self.size[1])]
+        RelativeLayout:
+            ImageButton:
+                source: 'mental_health_logo.png' 
+                size_hint: 1,1
+            Label:
+                text: "InspireMe"
+                font_size:'50sp'
+                color: rgba('#e67e22')
+                pos_hint: {'center_x':0.5,'center_y':0.3}
+            Button:
+                text: "Getting Started"
+                background_color: 1,1,1,0
+                opacity: 1 if self.state=='normal' else 0.5
+                color: 0.1,0.7,1,1
+                on_press: root.getting_started()
+                font_size:'20sp'
+                pos_hint: {'center_x':0.5,'center_y':0.2}
+
+
+
 <LoginScreen>:
-    GridLayout:
-        cols: 1
-        padding: 15,15
-        spacing: 20,20
+    BoxLayout:
+        canvas.before:
+            Color: 
+                rgba: [1, 1, 1, 1]
+            Rectangle:
+                pos: self.pos
+                size: self.size
+            Color: 
+                rgba: rgba('#e67e22')
+            Triangle:
+                points: [0, self.size[1], self.size[0], self.size[1],0, self.size[1]-(0.4*self.size[1])]
+            Color: 
+                rgba: rgba('#59abe3')
+            Triangle:
+                points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1]-(0.4*self.size[1])]
         GridLayout:
             cols: 1
+            padding: 25,25
+            spacing: 20,20
+            GridLayout:
+                cols: 1
+                size_hint: 0.8,1
+                padding: 10,10
+                spacing:10,0
+                Label:
+                    text: "User Login"
+                    font_size:'20sp'
+                TextInput:
+                    id: username
+                    hint_text: "Username"
+                    size_hint: (.2, None)
+                    height: 50
+                    multiline: False
+                    spacing_y: 50
+                TextInput:
+                    id: password
+                    password: True
+                    hint_text: "Password"
+                    size_hint: (.2, None)
+                    height: 50
+                    multiline: False
+                RelativeLayout:
+                    SmoothButton:
+                        text: "Login"
+                        on_press: root.login(root.ids.username.text, root.ids.password.text)
+                        size_hint: 0.3,0.3
+                        pos_hint: {'center_x':0.45,'center_y':0.48}
+                Label:
+                    id: login_wrong
+                    color: 'red'
+                    text: ""
+                    font_size:'10sp'
+            
+            GridLayout:
+                cols: 2
+                size_hint: 0.2,0.2
+                padding: 10,10
+                spacing:10,0
+                Button:
+                    text: "Forgot Password?"
+                    background_color: 1,1,1,0
+                    opacity: 1 if self.state=='normal' else 0.5
+                    color: 0.1,0.7,1,1
+                Button:
+                    text: "Sign Up"
+                    background_color: 1,1,1,0
+                    opacity: 1 if self.state=='normal' else 0.5
+                    color: 0.1,0.7,1,1
+                    on_press: root.sign_up()
+
+
+<SignUpScreen>:
+    BoxLayout:
+        canvas.before:
+            Color: 
+                rgba: [1, 1, 1, 1]
+            Rectangle:
+                pos: self.pos
+                size: self.size
+            Color: 
+                rgba: rgba('#e67e22')
+            Triangle:
+                points: [0, self.size[1], self.size[0], self.size[1],0, self.size[1]-(0.4*self.size[1])]
+            Color: 
+                rgba: rgba('#59abe3')
+            Triangle:
+                points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1]-(0.4*self.size[1])]    
+        GridLayout:
+            cols: 1
+            padding: 20,20
+            spacing: 20,20
             Label:
-                text: "User Login"
-                font_size:'20sp'
+                text: "Sign Up"
+                font_size:'30sp'
+                theme_Text_color: 'Primary'
+                pos_hint: {'center_x':0.45,'center_y':0.48}
+                color: 'blue'
             TextInput:
                 id: username
                 hint_text: "Username"
+                size_hint: (.2, None)
+                height: 50
+                multiline: False
+                spacing_y: 50
             TextInput:
                 id: password
                 password: True
                 hint_text: "Password"
+                size_hint: (.2, None)
+                height: 50
+                multiline: False
             RelativeLayout:
+                SmoothButton:
+                    text: "Submit"
+                    size_hint: 0.3,0.2
+                    pos_hint: {'center_x':0.45,'center_y':0.5}
+                    on_press: root.add_user(root.ids.username.text,root.ids.password.text)
                 Button:
-                    text: "Login"
-                    on_press: root.login(root.ids.username.text, root.ids.password.text)
-                    size_hint: 0.3,0.5
-                    pos_hint: {'center_x':0.5,'center_y':0.6}
-            Label:
-                id: login_wrong
-                text: ""
-        
-        GridLayout:
-            cols: 2
-            size_hint: 0.2,0.2
-            padding: 10,10
-            spacing:10,0
-            Button:
-                text: "Forgot Password?"
-                background_color: 1,1,1,0
-                opacity: 1 if self.state=='normal' else 0.5
-                color: 0.1,0.7,1,1
-            Button:
-                text: "Sign Up"
-                background_color: 1,1,1,0
-                opacity: 1 if self.state=='normal' else 0.5
-                color: 0.1,0.7,1,1
-                on_press: root.sign_up()
-
-<SignUpScreen>:
-    GridLayout:
-        cols: 1
-        padding: 20,20
-        spacing: 20,20
-        Label:
-            text: "Sign Up"
-        TextInput:
-            id: username
-            hint_text: "Username"
-        TextInput:
-            id: password
-            hint_text: "Password"
-        Button:
-            text: "Submit"
-            
-            on_press: root.add_user(root.ids.username.text,root.ids.password.text)
+                    text: "Back to Login Screen"
+                    background_color: 1,1,1,0
+                    opacity: 1 if self.state=='normal' else 0.5
+                    color: 0.1,0.7,1,1
+                    pos_hint: {'center_x':0.45,'center_y':0.2}
+                    on_press: root.back_to_login()
 
 <SignUpScreenSuccess>:
     GridLayout:
@@ -70,33 +171,55 @@
             on_press: root.go_to_login()
 
 <LoginScreenSuccess>:
-    GridLayout:
-        cols: 1
-        padding: 30,30
-        spacing: 30,30
-        RelativeLayout:
-            ImageButton:
-                source: 'logout_hover.png' if self.hovered else 'logout_nothover.png'
-                on_press: root.log_out()
-                size_hint: 0.35,0.35
-                pos_hint: {'center_x':0.93,'center_y':0.8}
-        Label:
-            text: "How do you feel?"
-        TextInput:
-            id: feeling 
-            hint_text: "Things to try: happy, sad, unloved...."
-        Button:
-            text:"Enlighten Me!"
-            on_press: root.get_quote(root.ids.feeling.text)
-        ScrollView:
+    BoxLayout:
+        canvas.before:
+            Color: 
+                rgba: [1, 1, 1, 1]
+            Rectangle:
+                pos: self.pos
+                size: self.size
+            Color: 
+                rgba: rgba('#e67e22')
+            Triangle:
+                points: [0, self.size[1], self.size[0], self.size[1],0, self.size[1]-(0.4*self.size[1])]
+            Color: 
+                rgba: rgba('#59abe3')
+            Triangle:
+                points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1]-(0.4*self.size[1])]
+        GridLayout:
+            cols: 1
+            padding: 30,30
+            spacing: 30,30
+            RelativeLayout:
+                ImageButton:
+                    source: 'logout_hover.png' if self.hovered else 'logout_nothover.png'
+                    on_press: root.log_out()
+                    size_hint: 0.35,0.35
+                    pos_hint: {'center_x':0.93,'center_y':0.8}
             Label:
-                id: quote
-                text: ""
-                text_size: self.width, None
-                size_hint_y: None
-                height: self.texture_size[1]
+                text: "How do you feel?"
+            TextInput:
+                id: feeling 
+                hint_text: "Write down your feelings here...."
+            RelativeLayout:
+                SmoothButton:
+                    text:"Inspire Me!"
+                    size_hint: 0.3,0.4
+                    pos_hint: {'center_x':0.45,'center_y':0.57}
+                    on_press: root.get_quote(root.ids.feeling.text)
+            ScrollView:
+                Label:
+                    id: quote
+                    text: ""
+                    color: 'black'
+                    text_size: self.width, None
+                    size_hint_y: None
+                    height: self.texture_size[1]
 
 <RootWidget>:
+    FirstScreen:
+        name: "first_screen"
+
     LoginScreen:
         name: "login_screen"
 
@@ -108,3 +231,16 @@
 
     LoginScreenSuccess:
         name: "login_screen_success"
+    
+<SmoothButton@Button>:
+    background_color: (0, 0, 0 , 0)
+    background_normal: ''
+    back_color: (0, 0, 1, 1)
+    border_radius: [18]
+    canvas.before:
+        Color: 
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.size
+    
